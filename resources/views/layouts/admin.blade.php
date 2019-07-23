@@ -71,5 +71,11 @@
         <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('lte/dist/js/adminlte.min.js') }}"></script>
+
+        <!-- OPTIONAL SCRIPTS -->
+        <script src="{{ asset('lte/plugins/chart.js/Chart.min.js') }}"></script>
+        <script src="{{ asset('lte/dist/js/demo.js') }}"></script>
+        <script src="{{ asset('lte/dist/js/pages/dashboard3.js') }}"></script>
+
     </body>
 </html>
