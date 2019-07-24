@@ -11,13 +11,16 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/admin', 'AdminController@index');
-Route::get('/admin/user', 'AdminController@user');
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/admin/dashboard', 'HomeController@index')->name('dashboard');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('logout', 'Auth\LoginController@logout');
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/admin/user', 'AdminController@user')->name('admin.user');

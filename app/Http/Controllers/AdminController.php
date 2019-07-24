@@ -6,13 +6,28 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    //
-    public function index(){
-        return view('admin/dashboard');
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+ 
+     /**
+      * Show the application dashboard.
+      *
+      * @return \Illuminate\Contracts\Support\Renderable
+      */
+    public function index()
+    {
+        return view('admin.dashboard');
     }
 
     public function user(){
-        return view('admin/user');
+        return view('admin.user');
     }
 
 }
