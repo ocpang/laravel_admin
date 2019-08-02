@@ -1,0 +1,9 @@
+.avatar-header {
+    width: 30px !important;
+    height: 30px !important;
+    margin-top: -5px !important;
+    margin-right: 0px !important;
+}
+.user-footer .btn-default {
+    font-size: 0.9em;
+}

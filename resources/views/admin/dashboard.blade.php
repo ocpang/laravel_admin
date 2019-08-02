@@ -258,3 +258,12 @@
     <!-- /.col-md-6 -->
 </div>
 @endsection
+
+@section('add-on')
+<!-- OPTIONAL SCRIPTS -->
+<script src="{{ asset('lte/plugins/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('lte/dist/js/demo.js') }}"></script>
+<script src="{{ asset('lte/dist/js/pages/dashboard3.js') }}"></script>
+
+@endsection
+        

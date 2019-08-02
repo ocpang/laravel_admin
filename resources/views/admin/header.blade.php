@@ -11,24 +11,28 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-user-circle"></i>
+        <li class="nav-item dropdown user-menu">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="user-image img-circle elevation-2 avatar-header" alt="User Image">
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-user-tie mr-2"></i> {{ trans('custom.my_profile') }}
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                    <i class="fas fa-sign-out-alt mr-2"></i> {{ trans('custom.logout') }}
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header bg-primary">
+                    <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="img-circle elevation-2" alt="User Image">
+                    <p>
+                        {{ Auth::user()->name }}
+                        <small>{{ trans('custom.member_since') }} {{ date('F Y', strtotime(Auth::user()->created_at)) }}</small>
+                    </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <a href="#" class="btn btn-default btn-flat">{{ trans('custom.my_profile') }}</a>
+                    <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ trans('custom.logout') }}</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
         </li>
     </ul>
 </nav>
