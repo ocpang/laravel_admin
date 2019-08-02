@@ -17,8 +17,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-// Route::get('/admin/dashboard', 'HomeController@index')->name('dashboard');
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('basicAuth');
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
