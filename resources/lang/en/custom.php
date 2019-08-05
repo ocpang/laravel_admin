@@ -14,6 +14,7 @@ return [
     'logout' => 'Logout',
     'member_since' => 'Member since',
     'my_profile' => 'My Profile',
+    'profile' => 'Profile',
     'users' => 'Users',
 
 ];

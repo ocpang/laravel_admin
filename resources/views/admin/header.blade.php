@@ -13,20 +13,20 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="user-image img-circle elevation-2 avatar-header" alt="User Image">
+                <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="user-image img-circle elevation-2 avatar-header" alt="User profile picture">
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <!-- User image -->
+                <!-- User profile picture -->
                 <li class="user-header bg-primary">
-                    <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="img-circle elevation-2" alt="User Image">
+                    <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="img-circle elevation-2" alt="User profile picture">
                     <p>
-                        {{ Auth::user()->name }}
+                        {{ ucwords(Auth::user()->name) }}
                         <small>{{ trans('custom.member_since') }} {{ date('F Y', strtotime(Auth::user()->created_at)) }}</small>
                     </p>
                 </li>
                 <!-- Menu Footer-->
                 <li class="user-footer">
-                    <a href="#" class="btn btn-default btn-flat">{{ trans('custom.my_profile') }}</a>
+                    <a href="{{ route('my_profile') }}" class="btn btn-default btn-flat">{{ trans('custom.my_profile') }}</a>
                     <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ trans('custom.logout') }}</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
