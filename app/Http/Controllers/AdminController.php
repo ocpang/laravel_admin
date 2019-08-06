@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Image;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
@@ -23,6 +27,15 @@ class AdminController extends Controller
       */
     public function index()
     {
+        if(session('profile_picture') == ""){
+            if(Auth::user()->avatar != ""){
+                session(['profile_picture' => asset('images/avatars/' . Auth::user()->avatar)]);
+            }
+            else{
+                session(['profile_picture' => asset('images/defaultuser.jpeg')]);                
+            }
+        }
+
         return view('admin.dashboard');
     }
 
@@ -32,6 +45,38 @@ class AdminController extends Controller
 
     public function users(){
         return view('admin.users');
+    }
+
+    public function save_profile(){
+        $postData = request()->post();
+        
+        $model = User::find(Auth::user()->id);
+        $filename = $model->avatar;
+        if(request()->hasfile('avatar')) {
+            $file = request()->file('avatar');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = date('YmdHis').rand(10,99).'.'.$extension;
+            $file->move(public_path().'/images/avatars/', $filename);
+            $img = Image::make(public_path().'/images/avatars/'.$filename)->resize(300, null, function($constraint) {
+                $constraint->aspectRatio();
+            })->crop(300, 300, 0, 0);
+            $img->save(public_path().'/images/avatars/'.$filename);
+
+            session(['profile_picture' => asset('images/avatars/' . $filename)]);
+
+            if(is_file(public_path().'/images/avatars/'.$model->avatar))
+                unlink(public_path().'/images/avatars/'.$model->avatar);
+        }
+
+        $model->name = $postData['name'];
+        $model->avatar = $filename;
+
+        if($model->save())
+            session(['success_message' => trans('custom.saved_successfully')]);
+        else
+            session(['error_message' => trans('custom.failed_to_save')]);
+
+        return redirect('admin/my_profile');            
     }
 
 }

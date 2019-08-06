@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(session('profile_picture') == ""){
+            if(Auth::user()->avatar != ""){
+                session(['profile_picture' => asset('images/avatars/' . Auth::user()->avatar)]);
+            }
+            else{
+                session(['profile_picture' => asset('images/defaultuser.jpeg')]);                
+            }
+        }
+        
         return view('admin.dashboard');
     }
 }

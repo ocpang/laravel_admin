@@ -13,12 +13,12 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="user-image img-circle elevation-2 avatar-header" alt="User profile picture">
+                <img src="{{ session('profile_picture') }}" class="user-image img-circle elevation-2 avatar-header" alt="User profile picture">
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!-- User profile picture -->
                 <li class="user-header bg-primary">
-                    <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="img-circle elevation-2" alt="User profile picture">
+                    <img src="{{ session('profile_picture') }}" class="img-circle elevation-2" alt="User profile picture">
                     <p>
                         {{ ucwords(Auth::user()->name) }}
                         <small>{{ trans('custom.member_since') }} {{ date('F Y', strtotime(Auth::user()->created_at)) }}</small>
