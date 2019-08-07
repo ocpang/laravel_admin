@@ -7,3 +7,6 @@
 .user-footer .btn-default {
     font-size: 0.9em;
 }
+.error {
+    color: #dc3545!important;
+}

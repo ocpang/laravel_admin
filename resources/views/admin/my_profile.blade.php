@@ -22,7 +22,7 @@
         <div class="card card-primary card-outline">
             <div class="card-body box-profile">
             <div class="text-center">
-                <img class="profile-user-img img-fluid img-circle" src="{{ session('profile_picture') }}" alt="User profile picture">
+                <img class="profile-user-img img-fluid img-circle" src="{{ session('profile_picture') }}" alt="User profile picture" data-toggle="modal" data-target="#pictureModal">
             </div>
 
             <h3 class="profile-username text-center">{{ ucwords(Auth::user()->name) }}</h3>
@@ -311,21 +311,23 @@
                     <!-- /.tab-pane -->
 
                     <div class="tab-pane" id="tab_change_my_profile">
-                        <form class="form-horizontal" method="post" action="{{ route('save_profile') }}" enctype="multipart/form-data" autocomplete="off">
+                        <form class="form-horizontal" id="editProfileForm" method="post" action="{{ route('save_profile') }}" enctype="multipart/form-data" autocomplete="off">
                             @csrf
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-2 control-label">{{ trans('custom.name') }}</label>
+                                    <label for="name" class="col-sm-2 control-label">{{ trans('custom.name') }}<span class="text-danger">*</span></label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="{{ trans('custom.name') }}" value="{{ Auth::user()->name }}" />
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="{{ trans('custom.name') }}" value="{{ Auth::user()->name }}" maxlength="50" />
                                     </div>
+                                    <span class="text-danger">{{ $errors->first('name') }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="avatar" class="col-sm-2 control-label">{{ trans('custom.profile_picture') }}</label>
                                     <div class="col-sm-10">
                                         <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*" />
                                     </div>
+                                    <span class="text-danger">{{ $errors->first('avatar') }}</span>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -344,9 +346,45 @@
     </div>
     <!-- /.col -->
 </div>
+
+<!-- The Modal -->
+<div class="modal" id="pictureModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{ trans('custom.profile_picture') }}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body text-center">
+                <img src="{{ session('profile_picture') }}" class="img-thumbnail" alt="User profile picture"> 
+                <p>&nbsp;</p>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('add-on')
+<script>
+    if ($("#editProfileForm").length > 0) {
+        $("#editProfileForm").validate({
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 50
+                },  
+            },
+            messages: {
+                name: {
+                    required: "Please enter {{ trans('custom.name') }}",
+                    maxlength: "Your last {{ trans('custom.name') }} maxlength should be 50 characters long."
+                },
+            },
+        });
+    }
 
+</script>
 @endsection
         

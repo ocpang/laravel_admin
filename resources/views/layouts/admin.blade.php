@@ -69,7 +69,10 @@
         <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <!-- Toastr -->
         <script src="{{ asset('lte/plugins/toastr/toastr.min.js') }}"></script>
-
+        <!-- Jquery Validate -->        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
+  
         <!-- AdminLTE App -->
         <script src="{{ asset('lte/dist/js/adminlte.min.js') }}"></script>
 
@@ -94,28 +97,19 @@
                     "hideMethod": "fadeOut"
                 }
                 
-                @if(session('success_message') != "")
-                    toastr.success("{{ session('success_message') }}");
+                @if($message = Session::get('success'))
+                    toastr.success("{{ $message }}");
                 @endif
-                @if(session('info_message') != "")
-                    toastr.info("{{ session('info_message') }}");
+                @if($message = Session::get('info'))
+                    toastr.info("{{ $message }}");
                 @endif
-                @if(session('error_message') != "")
-                    toastr.error("{{ session('error_message') }}");
+                @if($message = Session::get('error'))
+                    toastr.error("{{ $message }}");
                 @endif
-                @if(session('warning_message') != "")
-                    toastr.warning("{{ session('warning_message') }}");
+                @if($message = Session::get('warning'))
+                    toastr.warning("{{ $message }}");
                 @endif
 
-                <?php
-                    session([
-                        'success_message' => '',
-                        'info_message' => '',
-                        'error_message' => '',
-                        'warning_message' => '',
-                    ]);
-                ?>
-                
             });
         </script>
     </body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Image;
+use Redirect;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -70,13 +71,12 @@ class AdminController extends Controller
 
         $model->name = $postData['name'];
         $model->avatar = $filename;
-
+        
         if($model->save())
-            session(['success_message' => trans('custom.saved_successfully')]);
+            return Redirect::to("admin/my_profile")->withSuccess(trans('custom.saved_successfully'));
         else
-            session(['error_message' => trans('custom.failed_to_save')]);
-
-        return redirect('admin/my_profile');            
+            return Redirect::to("admin/my_profile")->withError(trans('custom.failed_to_save'));
+        
     }
 
 }

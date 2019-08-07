@@ -11,6 +11,7 @@ return [
 
     'choose_file' => 'Choose file',
     'change_my_profile' => 'Change My Profile',
+    'close' => 'Close',
     'dashboard' => 'Dashboard',
     'failed_to_save' => 'failed to save',
     'home' => 'Home',
