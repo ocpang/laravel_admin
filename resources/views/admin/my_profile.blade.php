@@ -22,7 +22,7 @@
         <div class="card card-primary card-outline">
             <div class="card-body box-profile">
             <div class="text-center">
-                <img class="profile-user-img img-fluid img-circle" src="{{ session('profile_picture') }}" alt="User profile picture" data-toggle="modal" data-target="#pictureModal">
+                <img class="profile-user-img img-fluid img-circle" src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" alt="User profile picture" data-toggle="modal" data-target="#pictureModal">
             </div>
 
             <h3 class="profile-username text-center">{{ ucwords(Auth::user()->name) }}</h3>
@@ -311,7 +311,7 @@
                     <!-- /.tab-pane -->
 
                     <div class="tab-pane" id="tab_change_my_profile">
-                        <form class="form-horizontal" id="editProfileForm" method="post" action="{{ route('save_profile') }}" enctype="multipart/form-data" autocomplete="off">
+                        <form class="form-horizontal" id="editProfileForm" method="post" action="{{ route('admin.save_profile') }}" enctype="multipart/form-data" autocomplete="off">
                             @csrf
 
                             <div class="card-body">
@@ -358,7 +358,7 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body text-center">
-                <img src="{{ session('profile_picture') }}" class="img-thumbnail" alt="User profile picture"> 
+                <img src="{{ Auth::user()->avatar == '' ? asset('images/defaultuser.jpeg') : asset('images/avatars/' . Auth::user()->avatar) }}" class="img-thumbnail" alt="User profile picture"> 
                 <p>&nbsp;</p>
             </div>
         </div>

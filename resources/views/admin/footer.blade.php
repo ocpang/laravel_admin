@@ -4,5 +4,5 @@
       Version 1.0.0
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; {{ date('Y') }} <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; {{ date('Y') }} <a href="https://www.instagram.com/octavianpanggestu">Octavian Panggestu</a>.</strong> All rights reserved.
 </footer>

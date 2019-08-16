@@ -28,15 +28,6 @@ class AdminController extends Controller
       */
     public function index()
     {
-        if(session('profile_picture') == ""){
-            if(Auth::user()->avatar != ""){
-                session(['profile_picture' => asset('images/avatars/' . Auth::user()->avatar)]);
-            }
-            else{
-                session(['profile_picture' => asset('images/defaultuser.jpeg')]);                
-            }
-        }
-
         return view('admin.dashboard');
     }
 

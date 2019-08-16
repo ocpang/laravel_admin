@@ -8,15 +8,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        
         <title>{{ config('app.name') }}</title>
 
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
         <!-- IonIcons -->
         <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="{{ asset('lte/plugins/datatables/dataTables.bootstrap4.css') }}">
         <!-- Toastr -->
         <link rel="stylesheet" href="{{ asset('lte/plugins/toastr/toastr.min.css') }}">
+        <!-- Input Mask -->
+        <link rel="stylesheet" href="{{ asset('plugins/inputmask/inputmask.css') }}">
 
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
@@ -67,8 +72,13 @@
         <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
         <!-- Bootstrap 4 -->
         <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <!-- DataTables -->
+        <script src="{{ asset('lte/plugins/datatables/jquery.dataTables.js') }}"></script>
+        <script src="{{ asset('lte/plugins/datatables/dataTables.bootstrap4.js') }}"></script>
         <!-- Toastr -->
         <script src="{{ asset('lte/plugins/toastr/toastr.min.js') }}"></script>
+        <!-- Input Mask -->
+        <script src="{{ asset('plugins/inputmask/jquery.inputmask.js') }}"></script>
         <!-- Jquery Validate -->        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
@@ -76,9 +86,10 @@
         <!-- AdminLTE App -->
         <script src="{{ asset('lte/dist/js/adminlte.min.js') }}"></script>
 
-        @yield('add-on')
         <script type="text/javascript">
             $(function() {
+                $(".number").inputmask("99999999999");
+
                 toastr.options = {
                     "closeButton": false,
                     "debug": false,
@@ -112,5 +123,8 @@
 
             });
         </script>
+
+        @yield('add-on')
+        
     </body>
 </html>

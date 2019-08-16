@@ -10,3 +10,9 @@
 .error {
     color: #dc3545!important;
 }
+.card-header-block {
+    min-height: 57px;
+}
+#form span.error{
+    padding: 0 7.5px;
+}

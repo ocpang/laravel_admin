@@ -20,8 +20,20 @@ Auth::routes(['verify' => true]);
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('basicAuth');
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
-Route::get('/admin', 'AdminController@index')->name('admin')->middleware('verified');
-Route::get('/admin/my_profile', 'AdminController@my_profile')->name('my_profile');
-Route::post('/admin/save_profile', 'AdminController@save_profile')->name('save_profile');
-Route::get('/admin/users', 'AdminController@users')->name('users');
+/*
+|--------------------------------------------------------------------------
+| ADMINISTRATOR
+|--------------------------------------------------------------------------
+|
+*/
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+    Route::get('/admin', 'AdminController@index')->name('admin')->middleware('verified');
+    Route::get('/admin/my_profile', 'AdminController@my_profile')->name('admin.my_profile');
+    Route::post('/admin/save_profile', 'AdminController@save_profile')->name('admin.save_profile');
+    Route::get('/admin/users', 'AdminController@users')->name('admin.users');
+
+    // MENUS
+    Route::get('/admin/menus', 'admin\MenusController@index')->name('admin.menus');
+    Route::post('/admin/menus/store', 'admin\MenusController@store')->name('admin.menus.store');
+});
