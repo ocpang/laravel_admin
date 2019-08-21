@@ -2,13 +2,30 @@
 
 namespace App\Http\Controllers\admin;
 
+use Auth;
 use DataTables;
+use Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class MenusController extends Controller
 {
+
+    use SoftDeletes;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+     public function __construct()
+     {
+        //  $this->middleware('auth');
+     }
+  
     /**
      * Display a listing of the resource.
      *
@@ -64,25 +81,40 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {    
-        $data = array(
-            'order' => $request->order,
-            'name' => $request->name,
-            'link' => $request->link,
-            'icon' => $request->icon,
-            'parent_id' => $request->parent_id,
-            'language' => $request->language,
-            'created_at' => NOW(),
-        );
-        
-        $status = Menu::insert($data);
-        if($status){ 
-            $arr = array('message' => trans('custom.saved_successfully'), 'status' => 'success');
+        if(empty($request->id)){
+            $data = array(
+                'order' => $request->order,
+                'name' => $request->name,
+                'link' => $request->link,
+                'icon' => $request->icon,
+                'parent_id' => $request->parent_id,
+                'language' => $request->language,
+                'created_at' => NOW(),
+            );
+            
+            $status = Menu::insert($data);
         }
         else{
-            $arr = array('message' => trans('custom.failed_to_save'), 'status' => 'failed');
+            $data = Menu::find($request->id);
+            $data->order = $request->order;
+            $data->name = $request->name;
+            $data->link = $request->link;
+            $data->icon = $request->icon;
+            $data->parent_id = $request->parent_id;
+            $data->language = $request->language;
+            $data->updated_at = NOW();
+
+            $status = $data->save();
         }
 
-        return Response::json($arr);
+        if($status){ 
+            $response = array('message' => trans('custom.saved_successfully'), 'status' => 'success');
+        }
+        else{
+            $response = array('message' => trans('custom.failed_to_save'), 'status' => 'failed');
+        }
+
+        return Response::json($response);
     }
 
     /**
@@ -91,9 +123,15 @@ class MenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $get_data = Menu::find($request->id);
+        if(count($get_data) > 0)
+            $data = array('status' => 'success', 'data' => $get_data);
+        else
+            $data = array('status' => 'error');
+        
+        return Response::json($data);
     }
 
     /**
@@ -125,8 +163,18 @@ class MenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $get_data = Menu::find($request->id);
+        // print_r(Auth::check().' A');exit;
+        // $get_data->deleted_by = Auth::user()->id;
+        // $get_data->save();
+
+        if($get_data->trashed())
+            $data = array('status' => 'success');
+        else
+            $data = array('status' => 'error');
+        
+        return Response::json($data);
     }
 }

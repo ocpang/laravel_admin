@@ -20,8 +20,10 @@
         <link rel="stylesheet" href="{{ asset('lte/plugins/datatables/dataTables.bootstrap4.css') }}">
         <!-- Toastr -->
         <link rel="stylesheet" href="{{ asset('lte/plugins/toastr/toastr.min.css') }}">
-        <!-- Input Mask -->
+        <!-- JQuery Input Mask -->
         <link rel="stylesheet" href="{{ asset('plugins/inputmask/inputmask.css') }}">
+        <!-- JQuery Confirm -->
+        <link rel="stylesheet" href="{{ asset('plugins/confirm/css/jquery-confirm.css') }}">
 
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
@@ -77,8 +79,10 @@
         <script src="{{ asset('lte/plugins/datatables/dataTables.bootstrap4.js') }}"></script>
         <!-- Toastr -->
         <script src="{{ asset('lte/plugins/toastr/toastr.min.js') }}"></script>
-        <!-- Input Mask -->
+        <!-- JQuery Input Mask -->
         <script src="{{ asset('plugins/inputmask/jquery.inputmask.js') }}"></script>
+        <!-- JQuery Confirm -->
+        <script src="{{ asset('plugins/confirm/js/jquery-confirm.js') }}"></script>
         <!-- Jquery Validate -->        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>

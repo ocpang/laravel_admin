@@ -62,6 +62,8 @@
             <!-- Modal Body -->
             <div class="modal-body">
                 <form class="form-horizontal" id="form" action="javascript:void(0)" method="post" autocomplete="off">
+                    <input type="hidden" name="id" value="" id="id">
+
                     <div class="card-body">
                         <div class="form-group">
                             <label for="order" class="col-sm-2 control-label">{{ trans('custom.order') }}<span class="text-danger">*</span></label>
@@ -153,12 +155,6 @@
         });
     });
 
-    function addData(){
-        $('#formModal').modal('show');
-        $('#form')[0].reset(); 
-        $('.modal-title').text("{{ trans('custom.add_data') }}"); 
-    }
-
     // Pengaturan Form Validation 
     var form_validator = $("#form").validate({
         errorPlacement: function(error, element) {
@@ -243,6 +239,70 @@
         }
     });
 
+    function addData(){
+        $('#formModal').modal('show');
+        $('#form')[0].reset(); 
+        $('.modal-title').text("{{ trans('custom.add_data') }}"); 
+    }
+
+    function editData(value){   
+        form_validator.resetForm();
+        $("html, body").animate({
+            scrollTop: 0
+        }, 500);
+        $.getJSON("{!! route('api.admin.menus.selectbyid') !!}", {id: value}, function(json, textStatus) {
+            if(json.status == "success"){
+                var row = json.data;
+                $('#id').val(row.id);
+                $('#order').val(row.order);
+                $('#name').val(row.name);
+                $('#link').val(row.link);
+                $('#icon').val(row.icon);
+                $('#parent_id').val(row.parent_id).change();
+                $('#language').val(row.language);
+                
+                $('#formModal').modal('show');
+                $('.modal-title').text("{{ trans('custom.edit_data') }}"); 
+            }
+            else if(json.status == "error"){
+                toastr.error("{{ trans('custom.data_not_found') }}");
+            }
+       });
+    }
+
+    function deleteData(value){
+        form_validator.resetForm();
+
+        $("html, body").animate({
+            scrollTop: 0
+        }, 500);
+
+        $.confirm({
+            content : "{{ trans('custom.delete_this_data') }}",
+            title : "{{ trans('custom.are_you_sure') }}",
+            confirm: function() {
+                $.getJSON("{!! route('api.admin.menus.delete') !!}", {id: value}, function(json, textStatus) {
+                    if(json.status == "success"){
+                        toastr.success('{{ trans("custom.deleted_succesfully") }}');
+                    }else if(json.status == "error"){
+                        toastr.error('{{ trans("custom.failed_to_delete") }}');
+                    }
+                    setTimeout(function(){
+                        window.location.reload()
+                    },1000);
+               });
+            },
+            cancel: function(button) {
+                // nothing to do
+            },
+            confirmButton: "Yes",
+            cancelButton: "No",
+            confirmButtonClass: "btn-danger",
+            cancelButtonClass: "btn-success",
+            dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
+        });
+    }
+    
 </script>
 @endsection
         

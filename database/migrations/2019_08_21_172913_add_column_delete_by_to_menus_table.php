@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAvatarToUsersTable extends Migration
+class AddColumnDeleteByToMenusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddAvatarToUsersTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('users', 'avatar')){                    
-            Schema::table('users', function (Blueprint $table) {
-                $table->string('avatar',50)->nullable()->default(null)->after('remember_token');
+        if (!Schema::hasColumn('menus', 'deleted_by')){                    
+            Schema::table('menus', function (Blueprint $table) {
+                $table->integer('deleted_by')->nullable()->default(0);
             });
         }
     }
@@ -27,7 +27,7 @@ class AddAvatarToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('menus', function (Blueprint $table) {
             //
         });
     }
